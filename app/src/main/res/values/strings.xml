@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">AndroidNotificationBasics</string>
+    <string name="channel_name">channel 1</string>
+    <string name="channel_description">notification for android 8.0+</string>
+</resources>
