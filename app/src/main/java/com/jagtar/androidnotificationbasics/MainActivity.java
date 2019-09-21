@@ -5,7 +5,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.icu.util.Calendar;
+import java.util.Calendar;
 import android.os.Build;
 
 import android.support.v7.app.AppCompatActivity;
@@ -39,19 +39,26 @@ public class MainActivity extends AppCompatActivity {
             notificationManager.createNotificationChannel(channel);
         }
         ////////////////////////////////
+        // ALARM MANAGER (setting up alarm)
+        myAlarm = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-        //setting time at which we need the notification
-        setTime.set(Calendar.HOUR_OF_DAY,19);
-        setTime.set(Calendar.MINUTE, 9);
 
         //intent to use to broadcast the alarm request
         Intent intent = new Intent(this, Notification_Receive.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        //setting time at which we need the notification
 
-        // ALARM MANAGER (setting up alarm)
-        myAlarm = (AlarmManager) getSystemService(ALARM_SERVICE);
-        myAlarm.setRepeating(AlarmManager.RTC_WAKEUP,setTime.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
+        //looping 2 times to set 2 alarms
+        // we need to give unique id to pending intent for each alarm and pass it to alarm manager
+        int idd= 1;
+        for(int i= 0; i< 2; i++) {
+            setTime.set(Calendar.HOUR_OF_DAY, 15 );
+            setTime.set(Calendar.MINUTE, (26 + i));
+            idd = i + 1;
+            pendingIntent = PendingIntent.getBroadcast(this, idd, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            myAlarm.setRepeating(AlarmManager.RTC_WAKEUP, setTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
+        }
 
         ///////////
 

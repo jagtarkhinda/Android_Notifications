@@ -18,10 +18,10 @@ import static com.jagtar.androidnotificationbasics.MainActivity.CHANNEL_ID;
 public class Notification_Receive extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-       // public static final String CHANNEL_ID = "notf1";
+       // making this intent so when user click on notification it can go the MainActivity
         Intent intente = new Intent(context, MainActivity.class);
         intente.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intente, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
 
